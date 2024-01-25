@@ -33,8 +33,13 @@ export async function ProfileButton() {
   }
 
   return (
-    <Button asChild variant="secondary">
-      <Link href={`/@${profile.username}`}>Profile</Link>
-    </Button>
+    <>
+      <Button asChild variant="secondary">
+        <Link href={`/profile/${profile.username}`}>Visit Profile</Link>
+      </Button>
+      <Button asChild variant="secondary">
+        <Link href={`/profile/${profile.username}/edit`}>Edit Profile</Link>
+      </Button>
+    </>
   )
 }
