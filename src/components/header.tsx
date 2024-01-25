@@ -1,5 +1,7 @@
-import { ModeToggle } from "@/components/mode-toggle"
 import Link from "next/link"
+
+import { AuthButton } from "@/components/auth-button"
+import { ModeToggle } from "@/components/mode-toggle"
 import { Dash } from "@/components/icons/dash"
 
 export function Header() {
@@ -11,7 +13,8 @@ export function Header() {
           <span className="sr-only">Home</span>
         </Link>
       </nav>
-      <div>
+      <div className="flex gap-2">
+        <AuthButton />
         <ModeToggle />
       </div>
     </header>

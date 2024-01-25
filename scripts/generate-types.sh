@@ -16,5 +16,20 @@ else
   exit 1
 fi
 
+# Use regex to extract a substring of the SUPABASE_PROJECT_ID
+if [[ "$NEXT_PUBLIC_SUPABASE_URL" =~ https://(.+).supabase.co ]]; then
+    # Extracted substring is the first match in BASH_REMATCH
+    SUPABASE_PROJECT_ID="${BASH_REMATCH[1]}"
+    echo "🔍 Found project id: $SUPABASE_PROJECT_ID"
+else
+    echo "Error: NEXT_PUBLIC_SUPABASE_URL does not match the expected pattern."
+    exit 1
+fi
+
+echo "✨ Generating types..."
+
 # Run the supabase command with the PROJECT_ID environment variable
-npx supabase gen types typescript --project-id "$NEXT_PUBLIC_SUPABASE_PROJECT_ID" > src/types/database.types.ts
+npx supabase gen types typescript --project-id "$SUPABASE_PROJECT_ID" > src/types/database.types.ts
+
+echo "✅ Done! Find types at src/types/database.types.ts"
+
