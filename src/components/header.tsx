@@ -3,6 +3,7 @@ import Link from "next/link"
 import { AuthButton } from "@/components/auth-button"
 import { ModeToggle } from "@/components/mode-toggle"
 import { Dash } from "@/components/icons/dash"
+import { ProfileButton } from "@/components/profile-button"
 
 export function Header() {
   return (
@@ -14,6 +15,7 @@ export function Header() {
         </Link>
       </nav>
       <div className="flex gap-2">
+        <ProfileButton />
         <AuthButton />
         <ModeToggle />
       </div>
