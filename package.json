@@ -10,8 +10,8 @@
     "lint": "next lint",
     "format": "prettier . --write",
     "test": "jest",
-    "generate-types": "bash scripts/generate-types.sh",
-    "generate-types:local": "supabase gen types typescript --local > src/types/schema.gen.ts",
+    "generate-types:x": "bash scripts/generate-types.sh",
+    "generate-types": "supabase gen types typescript --local > src/types/generated/database.types.ts",
     "prepare": "husky install",
     "lint-staged": "lint-staged",
     "supabase:update": "npm update supabase --save-dev && npm run db:stop:no-backup && npm run db:start",
@@ -21,6 +21,7 @@
     "db:start": "supabase start"
   },
   "dependencies": {
+    "@radix-ui/react-avatar": "^1.0.4",
     "@radix-ui/react-dropdown-menu": "^2.0.6",
     "@radix-ui/react-slot": "^1.0.2",
     "@supabase/auth-ui-react": "^0.4.7",

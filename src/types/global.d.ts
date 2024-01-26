@@ -1,7 +1,7 @@
-import { Database as DB } from './database.types'
+import { Database as DB } from "./generated/database.types";
 
 // declaring globally so we don't have to import it everywhere
 declare global {
-  type Database = DB
-  type Profile = DB['public']['Tables']['profiles']['Row']
+  type Database = DB;
+  type Profile = DB["public"]["Tables"]["profiles"]["Row"];
 }
