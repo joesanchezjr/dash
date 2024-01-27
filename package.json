@@ -12,7 +12,7 @@
     "test": "jest",
     "generate-types:x": "bash scripts/generate-types.sh",
     "generate-types": "supabase gen types typescript --local > src/types/generated/database.types.ts",
-    "prepare": "husky install",
+    "prepare": "husky",
     "lint-staged": "lint-staged",
     "supabase:update": "npm update supabase --save-dev && npm run db:stop:no-backup && npm run db:start",
     "db:reset": "supabase db reset",
