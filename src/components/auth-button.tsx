@@ -11,8 +11,8 @@ export async function AuthButton() {
   const supabase = createClient(cookieStore)
 
   const {
-    data: { user },
-  } = await supabase.auth.getUser()
+    data: { session },
+  } = await supabase.auth.getSession()
 
   async function signOut() {
     "use server"
@@ -23,7 +23,7 @@ export async function AuthButton() {
     return redirect("/login")
   }
 
-  return user ? (
+  return session ? (
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     <form action={signOut}>
       <Button variant="outline" type="submit">

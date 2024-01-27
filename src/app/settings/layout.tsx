@@ -1,8 +1,20 @@
 import SettingsNavigation from "@/app/settings/navigation"
 import { Separator } from "@/components/ui/separator"
 import { Toaster } from "@/components/ui/sonner"
+import { createClient } from "@/utils/supabase/server"
+import { cookies } from "next/headers"
+import { redirect } from "next/navigation"
 
-export default function SettingsLayout({ children }: { children: React.ReactNode }) {
+export default async function SettingsLayout({ children }: { children: React.ReactNode }) {
+  const supabase = createClient(cookies())
+  const {
+    data: { session },
+  } = await supabase.auth.getSession()
+
+  if (!session) {
+    return redirect("/login?reason=not-authenticated")
+  }
+
   return (
     <main className="container">
       <div>
