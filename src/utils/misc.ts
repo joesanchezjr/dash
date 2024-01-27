@@ -1,6 +1,6 @@
 export function getUrl() {
   let url =
-    process.env.NODE_ENV === "production"
+    process.env.VERCEL_ENV === "production"
       ? "https://with-dash.vercel.app/"
       : process?.env?.NEXT_PUBLIC_VERCEL_BRANCH_URL ?? "http://localhost:3000/" // Automatically set by Vercel.
   // Make sure to include `https://` when not localhost.
