@@ -50,40 +50,8 @@ export default async function EditProfilePage({ params }: { params: { username: 
 
   async function updateUser(formData: FormData) {
     "use server"
-    const supabase = createClient(cookies())
-    const updated_profile = {
-      display_name: formData.get("display_name") ?? undefined,
-      username: formData.get("username") ?? undefined,
-      website: formData.get("website") ?? undefined,
-    }
 
-    for (const [key, value] of Object.entries(updated_profile)) {
-      if (!value || value === profile[key]) {
-        delete updated_profile[key]
-      }
-    }
-
-    if (Object.values(updated_profile).filter(Boolean).length === 0) {
-      console.log("No changes detected")
-      // exit server, tell the client that no changes were detected
-      throw new Response("No changes detected", { status: 400, statusText: "No changes detected!" })
-    }
-
-    console.log("CHANGES DETECTED", updated_profile)
-    // const { error } = await supabase.from("profiles").update(updated_profile).eq("id", profile.id)
-
-    // if (error) {
-    //   throw error
-    // }
-
-    return revalidatePath(`/profile/${profile.username}/edit`)
-
-    // const newProfile = {
-    //   display_name: formData.get("display_name") as string,
-    //   username: formData.get("username") as string,
-    //   website: formData.get("website") as string,
-    // }
-    // const { data, error } = await supabase.from("profiles").update(formData).eq("id", profile.id).single()
+   
   }
   return (
     <main className="container py-12">
