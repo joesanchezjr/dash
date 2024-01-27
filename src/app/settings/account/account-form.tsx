@@ -64,7 +64,7 @@ export default function AccountForm({
     >
       <div>
         <div>
-          <Label htmlFor="display_name">Display Name</Label>
+          <Label htmlFor="display_name">Name</Label>
           <span className="ml-2 text-xs text-zinc-400 dark:text-zinc-600" id="display_name-hint">
             32 characters max
           </span>

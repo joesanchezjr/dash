@@ -71,6 +71,43 @@ export async function updateUser(
     return redirect("/login?reason=not-authenticated");
   }
 
+  const { data: current_profile } = await supabase.from("profiles").select("*")
+    .eq(
+      "id",
+      user.id,
+    ).select().single() || {};
+
+  const customFieldErrors = {};
+
+  // cannot remove previously set values
+  for (const [key, value] of Object.entries(current_profile || {})) {
+    if (!profile_data[key as keyof typeof profile_data] && !!value) {
+      if (key === "display_name") {
+        Object.assign(customFieldErrors, {
+          ["display_name"]: ["Display name cannot be empty"],
+        });
+      }
+      if (key === "username") {
+        Object.assign(customFieldErrors, {
+          ["username"]: ["Username cannot be empty"],
+        });
+      }
+      if (key === "website") {
+        Object.assign(customFieldErrors, {
+          ["website"]: ["Website cannot be empty"],
+        });
+      }
+    }
+  }
+
+  if (Object.keys(customFieldErrors).length > 0) {
+    return {
+      errors: {
+        fieldErrors: customFieldErrors,
+      },
+    };
+  }
+
   const { error } = await supabase.from("profiles").update(profile_data).eq(
     "id",
     user.id,

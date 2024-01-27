@@ -3,14 +3,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { usePathname } from "next/navigation"
 
-const navItems = [
-  { name: "Account", href: "/settings/account" },
-  // { name: "Profile", href: "/settings/profile" },
-  // { name: "Security", href: "/settings/security" },
-  // { name: "Billing", href: "/settings/billing" },
-  // { name: "Notifications", href: "/settings/notifications" },
-  // { name: "Integrations", href: "/settings/integrations" },
-]
+const navItems = [{ name: "Account", href: "/settings/account" }]
 
 export default function SettingsNavigation({ className, ...props }: { className?: string }) {
   const pathname = usePathname()

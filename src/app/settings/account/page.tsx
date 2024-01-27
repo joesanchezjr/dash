@@ -10,7 +10,7 @@ export default async function AccountSettings() {
     <div>
       <div>
         <h2 className="text-lg font-medium">Account Settings</h2>
-        <p className="text-sm text-zinc-500">Update your account settings. Set your preferred language and timezone.</p>
+        <p className="text-sm text-zinc-500">Update your account settings.</p>
       </div>
       <Separator className="my-4" />
       <div>

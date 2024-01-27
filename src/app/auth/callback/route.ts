@@ -13,17 +13,6 @@ export async function GET(request: Request) {
     const cookieStore = cookies();
     const supabase = createClient(cookieStore);
     await supabase.auth.exchangeCodeForSession(code);
-    const { data: { user } } = await supabase.auth.getUser();
-    if (user) {
-      const { data: profile } = await supabase.from("profiles").select("*").eq(
-        "id",
-        user.id,
-      ).single();
-
-      if (!profile?.username) {
-        return NextResponse.redirect(`${requestUrl.origin}/profile/create`);
-      }
-    }
   }
 
   // URL to redirect to after sign in process completes
