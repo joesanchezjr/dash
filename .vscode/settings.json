@@ -2,9 +2,6 @@
   "[prisma]": {
     "editor.defaultFormatter": "Prisma.prisma"
   },
-  "[typescript]": {
-    "editor.defaultFormatter": "denoland.vscode-deno"
-  },
   "deno.enablePaths": ["supabase/functions"],
   "deno.lint": true,
   "deno.unstable": true,
