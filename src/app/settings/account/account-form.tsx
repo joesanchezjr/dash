@@ -1,4 +1,5 @@
 "use client"
+
 import React, { useEffect, useState } from "react"
 
 import { Label } from "@/components/ui/label"
@@ -33,6 +34,7 @@ export default function AccountForm({
 }: {
   profile: Awaited<ReturnType<typeof import("./utils").getUserProfile>>
 }) {
+  const formRef = React.useRef<HTMLFormElement>(null)
   const [state, formAction] = useFormState(updateUser, { errors: null })
   const isHydrated = useHydrated()
 
@@ -44,23 +46,40 @@ export default function AccountForm({
   React.useEffect(() => {
     if (state?.success) {
       toast.success("Account updated!")
-      // toast("Event has been created", {
-      //   description: "Sunday, December 03, 2023 at 9:00 AM",
-      //   action: {
-      //     label: "Undo",
-      //     onClick: () => console.log("Undo"),
-      //   },
-      // })
     }
   }, [state?.success])
 
+  React.useEffect(() => {
+    const formEl = formRef.current
+    if (!formEl) {
+      return
+    }
+
+    if (Object.values(state?.errors || {}).length === 0) {
+      return
+    }
+
+    if (formEl.matches('[aria-invalid="true"]')) {
+      formEl.focus()
+    } else {
+      const firstInvalid = formEl.querySelector('[aria-invalid="true"]')
+      if (firstInvalid instanceof HTMLElement) {
+        firstInvalid.focus()
+      }
+    }
+  }, [state?.errors])
+
   return (
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises, jsx-a11y/role-supports-aria-props
     <form
+      id="account-form"
       action={formAction}
       className="space-y-4"
+      aria-invalid={hasFormError || undefined}
       aria-describedby={hasFormError ? "form-errors" : undefined}
       noValidate={isHydrated}
+      ref={formRef}
+      tabIndex={-1}
     >
       <div>
         <div>

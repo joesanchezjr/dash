@@ -11,7 +11,7 @@ import { revalidatePath } from "next/cache"
 const schema = z.object({
   display_name: z
     .string({
-      invalid_type_error: "Invalid Display Name",
+      invalid_type_error: "Invalid display name",
     })
     .max(32, {
       message: "Display name should be less than 32 characters long",
@@ -20,14 +20,19 @@ const schema = z.object({
     .or(z.literal("")),
   username: z
     .string({
-      invalid_type_error: "Invalid Username",
+      invalid_type_error: "Invalid username",
     })
     .min(3, {
       message: "Username must be at least 3 characters long",
     })
     .optional()
     .or(z.literal("")),
-  website: z.string({}).url({ message: "Website must be a valid URL" }).optional().or(z.literal("")),
+  website: z
+    .string({
+      invalid_type_error: "Invalid website",
+    })
+    .optional()
+    .or(z.literal("")),
 })
 
 interface UpdateUserState {
@@ -111,7 +116,21 @@ export async function updateUser(prevState: UpdateUserState, formData: FormData)
     }
   }
 
-  const { error } = await supabase.from("profiles").update(profile_data).eq("id", user.id)
+  // remove keys that match current profile
+  for (const [key, value] of Object.entries(current_profile || {})) {
+    if (profile_data[key as keyof typeof profile_data] === value) {
+      delete profile_data[key as keyof typeof profile_data]
+    }
+  }
+
+  if (Object.keys(profile_data).length === 0) {
+    return {}
+  }
+
+  const { error } = await supabase
+    .from("profiles")
+    .update({ ...profile_data, updated_at: new Date().toISOString() })
+    .eq("id", user.id)
 
   if (error) {
     return {
@@ -120,7 +139,7 @@ export async function updateUser(prevState: UpdateUserState, formData: FormData)
       },
     }
   }
-  revalidatePath("/settings/account")
 
+  revalidatePath("/settings/account")
   return { success: true }
 }

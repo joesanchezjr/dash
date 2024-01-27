@@ -10,11 +10,11 @@ export default function SettingsLayout({ children }: { children: React.ReactNode
         <p className="text-zinc-500">Manage your settings.</p>
       </div>
       <Separator className="my-8" />
-      <div className="grid grid-cols-6 gap-4">
-        <div className="grid-cols-1">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-6">
+        <div className="col-span-1">
           <SettingsNavigation />
         </div>
-        <div className="col-span-5 px-4">
+        <div className="col-span-1 px-4 sm:col-span-5">
           {children}
           <Toaster />
         </div>
