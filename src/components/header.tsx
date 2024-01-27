@@ -4,6 +4,7 @@ import { AuthButton } from "@/components/auth-button"
 import { ModeToggle } from "@/components/mode-toggle"
 import { Dash } from "@/components/icons/dash"
 import { ProfileButton } from "@/components/profile-button"
+import { Button } from "@/components/ui/button"
 
 export function Header() {
   return (
@@ -17,6 +18,9 @@ export function Header() {
       <div className="flex gap-2">
         <ProfileButton />
         <AuthButton />
+        <Button asChild variant="outline">
+          <Link href="/settings">Settings</Link>
+        </Button>
         <ModeToggle />
       </div>
     </header>
