@@ -16,7 +16,7 @@ export default async function SettingsLayout({ children }: { children: React.Rea
   }
 
   return (
-    <main className="container">
+    <main className="container pb-8">
       <div>
         <h1 className="text-2xl font-bold">Settings</h1>
         <p className="text-zinc-500">Manage your settings.</p>

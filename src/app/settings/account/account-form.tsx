@@ -19,7 +19,7 @@ function useHydrated() {
 
 function ErrorList({ errors, id }: { errors?: string[] | null; id?: string }) {
   return errors?.length ? (
-    <ul id={id} className="mt-1 flex flex-col gap-1">
+    <ul id={id} className="mt-1.5 flex flex-col gap-1">
       {errors.map((error, i) => (
         <li key={i} className="text-sm text-red-500">
           {error}
@@ -100,17 +100,22 @@ export default function AccountForm({
         <ErrorList id="display_name-errors" errors={state?.errors?.fieldErrors?.display_name} />
       </div>
       <div>
-        <Label htmlFor="username">Username</Label>
+        <div>
+          <Label htmlFor="username">Username</Label>
+          <span className="ml-2 text-xs text-zinc-400 dark:text-zinc-600" id="username-hint">
+            16 characters max
+          </span>
+        </div>
         <Input
           id="username"
           name="username"
           defaultValue={profile.username ?? undefined}
           className="mt-1"
-          aria-describedby={hasUsernameError ? "username-errors" : undefined}
+          aria-describedby={hasUsernameError ? "username-errors username-hint" : "username-hint"}
           aria-invalid={hasUsernameError || undefined}
           autoComplete="off"
         />
-        <ErrorList id="username-error" errors={state?.errors?.fieldErrors?.username} />
+        <ErrorList id="username-errors" errors={state?.errors?.fieldErrors?.username} />
       </div>
       <div>
         <Label htmlFor="website">Website</Label>

@@ -25,6 +25,12 @@ const schema = z.object({
     .min(3, {
       message: "Username must be at least 3 characters long",
     })
+    .regex(/^[a-zA-Z0-9_]+$/, {
+      message: "Username can only contain alphanumeric characters and underscores",
+    })
+    .max(16, {
+      message: "Username can be at most 16 characters long",
+    })
     .optional()
     .or(z.literal("")),
   website: z
@@ -65,13 +71,13 @@ export async function updateUser(prevState: UpdateUserState, formData: FormData)
   const profile_data = validatedFields.data
 
   for (const [key, value] of Object.entries(profile_data)) {
-    if (!value) {
-      delete profile_data[key as keyof typeof profile_data]
-    }
-    if (typeof value === "string" && value.length === 0) {
-      delete profile_data[key as keyof typeof profile_data]
+    if (!value || (typeof value === "string" && value.length === 0)) {
+      // @ts-expect-error null actually is a valid value in the database
+      profile_data[key as keyof typeof profile_data] = null
     }
   }
+
+  console.log(profile_data)
 
   const supabase = createClient(cookies())
   const {
@@ -87,7 +93,7 @@ export async function updateUser(prevState: UpdateUserState, formData: FormData)
 
   const customFieldErrors = {}
 
-  // cannot remove previously set values
+  // cannot remove previously set values or required values
   for (const [key, value] of Object.entries(current_profile || {})) {
     if (!profile_data[key as keyof typeof profile_data] && !!value) {
       if (key === "display_name") {
@@ -98,11 +104,6 @@ export async function updateUser(prevState: UpdateUserState, formData: FormData)
       if (key === "username") {
         Object.assign(customFieldErrors, {
           ["username"]: ["Username cannot be empty"],
-        })
-      }
-      if (key === "website") {
-        Object.assign(customFieldErrors, {
-          ["website"]: ["Website cannot be empty"],
         })
       }
     }
