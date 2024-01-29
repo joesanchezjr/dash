@@ -77,8 +77,6 @@ export async function updateUser(prevState: UpdateUserState, formData: FormData)
     }
   }
 
-  console.log(profile_data)
-
   const supabase = createClient(cookies())
   const {
     data: { user },
@@ -134,10 +132,22 @@ export async function updateUser(prevState: UpdateUserState, formData: FormData)
     .eq("id", user.id)
 
   if (error) {
-    return {
-      errors: {
-        formErrors: ["An unknown error occurred while updating your profile"],
-      },
+    // @todo: improve this
+    switch (error.code) {
+      case "23505":
+        return {
+          errors: {
+            fieldErrors: {
+              username: ["Username already exists"],
+            },
+          },
+        }
+      default:
+        return {
+          errors: {
+            formErrors: ["An unknown error occurred while updating your profile"],
+          },
+        }
     }
   }
 
