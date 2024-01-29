@@ -1,31 +1,19 @@
 import Link from "next/link"
-import { cookies } from "next/headers"
-import { redirect } from "next/navigation"
 
 import { Button } from "@/components/ui/button"
-
-import { createClient } from "@/utils/supabase/server"
+import { getServerSession, signOut } from "@/utils/supabase/session"
 
 export async function AuthButton() {
-  const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
+  const session = await getServerSession()
 
-  const {
-    data: { session },
-  } = await supabase.auth.getSession()
-
-  async function signOut() {
+  async function signOutUser() {
     "use server"
-
-    const cookieStore = cookies()
-    const supabase = createClient(cookieStore)
-    await supabase.auth.signOut()
-    return redirect("/login")
+    await signOut()
   }
 
   return session ? (
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    <form action={signOut}>
+    <form action={signOutUser}>
       <Button variant="outline" type="submit">
         Logout
       </Button>
