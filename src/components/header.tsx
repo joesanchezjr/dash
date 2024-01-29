@@ -4,14 +4,10 @@ import { AuthButton } from "@/components/auth-button"
 import { ModeToggle } from "@/components/mode-toggle"
 import { Dash } from "@/components/icons/dash"
 import { Button } from "@/components/ui/button"
-import { createClient } from "@/utils/supabase/server"
-import { cookies } from "next/headers"
+import { getServerSession } from "@/utils/supabase/session"
 
 export async function Header() {
-  const supabase = createClient(cookies())
-  const {
-    data: { session },
-  } = await supabase.auth.getSession()
+  const session = await getServerSession()
 
   return (
     <header className="container flex items-center justify-between py-4">
