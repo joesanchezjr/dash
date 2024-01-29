@@ -16,11 +16,9 @@ body {
   @apply min-h-screen-dynamic;
 }
 
-.supabase-auth-ui_ui-container {
-  *,
-  input,
-  button,
-  label {
-    @apply font-sans; /* this should fix the bug on windows where the font is not applied */
-  }
+.supabase-auth-ui_ui-container *,
+.supabase-auth-ui_ui-container input,
+.supabase-auth-ui_ui-container button,
+.supabase-auth-ui_ui-container label {
+  @apply font-sans; /* this should fix the bug on windows where the font is not applied */
 }
