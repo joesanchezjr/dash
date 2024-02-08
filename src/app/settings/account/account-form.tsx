@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
+import React from "react"
 
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
@@ -10,12 +10,7 @@ import { updateUser } from "@/app/settings/account/actions"
 import { useFormState } from "react-dom"
 
 import { toast } from "sonner"
-
-function useHydrated() {
-  const [hydrated, setHydrated] = useState(false)
-  useEffect(() => setHydrated(true), [])
-  return hydrated
-}
+import { useHydrated } from "@/hooks/use-hydrated"
 
 function ErrorList({ errors, id }: { errors?: string[] | null; id?: string }) {
   return errors?.length ? (
